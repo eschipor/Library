@@ -16,7 +16,7 @@ import persistance.model.Musica;
 /**
  * Servlet implementation class Index
  */
-@WebServlet(name = "indexMusica", urlPatterns = { "/indexMusica" })
+@WebServlet(name = "indexMusica", urlPatterns = { "/index/musica" })
 public class IndexMusica extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -34,7 +34,19 @@ public class IndexMusica extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("musica") != null)
+		{
+			response.sendRedirect("/Library/index/musica/insert.jsp");
+		}
+		if(request.getParameter("list") != null)
+		{
+			lista = daoMusica.findAll();
+			
+			request.setAttribute("lista", lista);
 
+			RequestDispatcher rd = request.getRequestDispatcher("/index/musica/list.jsp");
+			rd.forward(request,response);
+		}
 	}
 
 	/**
@@ -42,18 +54,6 @@ public class IndexMusica extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getParameter("musica") != null)
-		{
-			response.sendRedirect("/Library/indexMusica/insert_musica.jsp");
-		}
-		if(request.getParameter("lista") != null)
-		{
-			lista = daoMusica.findAll();
-			
-			request.setAttribute("lista", lista);
 
-			RequestDispatcher rd = request.getRequestDispatcher("indexMusica/musica.jsp");
-			rd.forward(request,response);
-		}
 	}
 }

@@ -9,23 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import persistance.dao.DaoFilm;
-import persistance.model.Film;
+import persistance.dao.DaoMusica;
+import persistance.model.Musica;
 
 /**
- * Servlet implementation class Film
+ * Servlet implementation class Index
  */
-@WebServlet("/index/film/AddFilm")
-public class AddFilm extends HttpServlet {
+@WebServlet(name = "detailMusica", urlPatterns = { "/index/musica/detail" })
+public class DetailMusica extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private DaoFilm daoFilm = new DaoFilm();
-	String msg = "";
-	boolean token = false;
+	DaoMusica daoMusica = new DaoMusica();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddFilm() {
+    public DetailMusica() {
         super();
     }
 
@@ -33,7 +32,15 @@ public class AddFilm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("ID") != null)
+		{
+			Musica current = daoMusica.getDetailByID(Integer.parseInt(request.getParameter("ID")));
+			
+			request.setAttribute("musica",current);
 
+			RequestDispatcher rd = request.getRequestDispatcher("/index/musica/details.jsp");
+			rd.forward(request,response);
+		}
 	}
 
 	/**
@@ -41,20 +48,6 @@ public class AddFilm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Film film = new Film();
-		film.setTitolo(request.getParameter("titolo"));
-		film.setData(Integer.parseInt(request.getParameter("data")));
-		
-			if(daoFilm.add(film)){
-				msg = "Salvato con sucesso";
-			} 
-			else
-			{
-				msg = "Errore nel salvataggo. Contattare l'amministratore!";
-			}
-			request.setAttribute("msg", msg);
-			RequestDispatcher rd =request.getRequestDispatcher("/success.jsp");
-			rd.forward(request,response);
 		
 	}
 }

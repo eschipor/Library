@@ -54,8 +54,10 @@ non ci sono canzoni!
 <div class="container">
 <div class="table">
 <table id="table2"><tr><td><tr><td width=20%>
-<img src="D:\INSTALL\eclipse-jee-mars-2-win32-x86_64\immagini\film.jpg" width=100%></td><td>
-Artista: ${current.nome}<br>
+<a href="/Library/index/musica/detail?ID=${current.id}">
+<img src="D:\INSTALL\eclipse-jee-mars-2-win32-x86_64\immagini\film.jpg" width=100%></a></td><td>
+<a href="/Library/index/musica/detail?ID=${current.id}">
+Artista: ${current.nome}<br></a>
 Titolo: ${current.titolo}<br>
 Data: ${current.data}<br>
 </td></tr></table>

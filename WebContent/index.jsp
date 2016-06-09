@@ -44,24 +44,25 @@ tr,td
 </style>
 <body>
 <h1 class="contenitore">Library</h1>
-<form action="indexMusica" method="POST">
+
 <div class="table">
 <table border=1 id="table"><tr><td width=40%>
-Musica<br></td><td><input type="submit" name="musica" value="INSERISCI" id="button">
-		  <input type="submit" name="lista_musica" value="lista" id="button">
-		  </td></tr></table></div>		  
-</form>
-<div class="table">
+Musica<br></td><td><a href="index/musica/insert.jsp"><input type="button" name="musica" value="INSERISCI" class="button"></a>
+		  <a href="index/musica?list=show"><input type="button" name="list" value="Lista" class="button"></a>
+		  </td></tr></table>	
+<br> 	  
+
 <table border=1 id="table"><tr><td width=40%>
-Film<br></td><td><a href="film"><input type="button" name="film" value="INSERISCI" class="button"></a>
-		<a href="film"><input type="button" name="film" value="lista" class="button"></a>
-		</td></tr></table></div>
-<form action="indexLibri" method="POST">
-<div class="table">
+Film<br></td><td><a href="index/film/insert.jsp"><input type="button" name="film" value="INSERISCI" class="button"></a>
+		<a href="index/film?list=show"><input type="button" name="list" value="Lista" class="button"></a>
+		</td></tr></table>
+<br>
+
 <table border=1 id="table"><tr><td width=40%>
-Libri<br></td><td><input type="submit" name="libri" value="INSERISCI" id="button">
-		 <input type="submit" name="lista_libri" value="lista" id="button">
+Libri<br></td><td><a href="index/libri/insert.jsp"><input type="button" name="libri" value="INSERISCI" class="button"></a>
+		 <a href="index/libri?list=show"><input type="button" name="list" value="Lista" class="button"></a>
 		 </td></tr></table></div>
-</form>
+
 </body>
+<h1 class="contenitore"></h1>
 </html>

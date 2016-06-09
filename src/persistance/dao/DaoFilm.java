@@ -120,15 +120,17 @@ public class DaoFilm
     }
 	public Film getDetailByID(Integer id) {
 		try{
-			String selectSQL = "select * from " +table+ " where id=?";
-			PreparedStatement preparedStatement = connect().getConnection().prepareStatement(selectSQL);
-			preparedStatement.setInt(1, id);
-			resultSet= preparedStatement.executeQuery(selectSQL);
+			connect();
+			String selectSQL = "select * from " +table+ " where id = ?";
+			PreparedStatement preparedStatement = connect.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, id.intValue());
+			resultSet= preparedStatement.executeQuery();
 			resultSet.next();
 				Film film = new Film();
     			film.setId(resultSet.getInt("id"));
     			film.setTitolo(resultSet.getString("titolo"));
     			film.setData(resultSet.getInt("data"));
+    			
     		return film;
 		}catch(Exception e){
 			return null;

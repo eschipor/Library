@@ -13,19 +13,18 @@ import persistance.dao.DaoFilm;
 import persistance.model.Film;
 
 /**
- * Servlet implementation class Film
+ * Servlet implementation class Index
  */
-@WebServlet("/index/film/AddFilm")
-public class AddFilm extends HttpServlet {
+@WebServlet(name = "detailFilm", urlPatterns = { "/index/film/detail" })
+public class DetailFilm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	private DaoFilm daoFilm = new DaoFilm();
-	String msg = "";
-	boolean token = false;
+	DaoFilm daoFilm = new DaoFilm();
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddFilm() {
+    public DetailFilm() {
         super();
     }
 
@@ -33,7 +32,15 @@ public class AddFilm extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("ID") != null)
+		{
+			Film current = daoFilm.getDetailByID(Integer.parseInt(request.getParameter("ID")));
+			
+			request.setAttribute("film",current);
 
+			RequestDispatcher rd = request.getRequestDispatcher("/index/film/details.jsp");
+			rd.forward(request,response);
+		}
 	}
 
 	/**
@@ -41,20 +48,6 @@ public class AddFilm extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		Film film = new Film();
-		film.setTitolo(request.getParameter("titolo"));
-		film.setData(Integer.parseInt(request.getParameter("data")));
-		
-			if(daoFilm.add(film)){
-				msg = "Salvato con sucesso";
-			} 
-			else
-			{
-				msg = "Errore nel salvataggo. Contattare l'amministratore!";
-			}
-			request.setAttribute("msg", msg);
-			RequestDispatcher rd =request.getRequestDispatcher("/success.jsp");
-			rd.forward(request,response);
 		
 	}
 }

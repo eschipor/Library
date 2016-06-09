@@ -16,7 +16,7 @@ import persistance.model.Libri;
 /**
  * Servlet implementation class Index
  */
-@WebServlet(name = "indexLibri", urlPatterns = { "/indexLibri" })
+@WebServlet(name = "indexLibri", urlPatterns = { "/index/libri" })
 public class IndexLibri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -34,7 +34,19 @@ public class IndexLibri extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("libri") != null)
+		{
+			response.sendRedirect("/Library/index/libri/insert.jsp");
+		}
+		if(request.getParameter("list") != null) 
+		{
+			lista = daoLibri.findAll();
+			
+			request.setAttribute("lista", lista);
 
+			RequestDispatcher rd = request.getRequestDispatcher("/index/libri/list.jsp");
+			rd.forward(request,response);
+		}
 	}
 
 	/**
@@ -42,18 +54,6 @@ public class IndexLibri extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		if(request.getParameter("libri") != null)
-		{
-			response.sendRedirect("/Library/indexLibri/insert_libri.jsp");
-		}
-		if(request.getParameter("lista") != null) 
-		{
-			lista = daoLibri.findAll();
-			
-			request.setAttribute("lista", lista);
 
-			RequestDispatcher rd = request.getRequestDispatcher("indexLibri/libri.jsp");
-			rd.forward(request,response);
-		}
 	}
 }

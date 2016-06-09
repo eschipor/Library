@@ -47,6 +47,7 @@ public class DaoMusica
     		while(resultSet.next())
     		{
     			Musica mus = new Musica();
+    			mus.setId(resultSet.getInt("id"));
     			mus.setNome(resultSet.getString("nome"));
     			mus.setTitolo(resultSet.getString("titolo"));
     			mus.setData(resultSet.getInt("data"));
@@ -85,7 +86,7 @@ public class DaoMusica
     public boolean delete(Musica m)
     {
 		try {
-			preparedStatement = connect.prepareStatement("delete from "+table+" where nome= ?;");
+			preparedStatement = connect.prepareStatement("delete from " +table+ " where nome= ?;");
 			preparedStatement.setString(1, m.getNome());
 			preparedStatement.executeUpdate();
 			return true;
@@ -116,6 +117,28 @@ public class DaoMusica
     	catch (Exception e) 
     	{
     		
+    	}
+    }
+    public Musica getDetailByID(Integer id){
+    	try{
+    		connect();
+    		String selectSQL = "select * from " +table+ " where id = ?";
+    		PreparedStatement preparedStatement = connect.prepareStatement(selectSQL);
+    		preparedStatement.setInt(1, id.intValue());
+    		resultSet = preparedStatement.executeQuery();
+    		resultSet.next();
+    			Musica musica = new Musica();
+    			musica.setId(resultSet.getInt("id"));
+    			musica.setNome(resultSet.getString("nome"));
+    			musica.setTitolo(resultSet.getString("titolo"));
+    			musica.setData(resultSet.getInt("data"));
+    			return musica;
+    	}
+    	catch (SQLException e){
+    		return null;
+    	}
+    	finally{
+    		close();
     	}
     }
 }

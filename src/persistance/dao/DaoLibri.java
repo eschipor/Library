@@ -85,7 +85,7 @@ public class DaoLibri
     public boolean delete(Libri l)
     {
 		try {
-			preparedStatement = connect.prepareStatement("delete from "+table+" where nome= ?;");
+			preparedStatement = connect.prepareStatement("delete from " +table+ " where nome= ?;");
 		    preparedStatement.setString(1, l.getNome());
 			preparedStatement.executeUpdate();
 			return true;
@@ -118,4 +118,24 @@ public class DaoLibri
 
     	}
     }
+	public Libri getDetailByID(Integer id) {
+		try{
+			connect();
+			String selectSQL = "select * from " +table+ " where id = ?";
+			PreparedStatement preparedStatement = connect.prepareStatement(selectSQL);
+			preparedStatement.setInt(1, id.intValue());
+			resultSet= preparedStatement.executeQuery();
+			resultSet.next();
+				Libri libri = new Libri();
+				libri.setId(resultSet.getInt("id"));
+				libri.setNome(resultSet.getString("nome"));
+				libri.setTitolo(resultSet.getString("titolo"));
+				libri.setData(resultSet.getInt("data"));
+    		return libri;
+		}catch(Exception e){
+			return null;
+		}finally{
+			close();
+		}
+	}
 }

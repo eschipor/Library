@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri = "http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
-<title>Film</title>
+<title>Libri</title>
 </head>
 <style type="text/css">
 .container
@@ -44,20 +44,21 @@ tr,td
 }
 </style>
 <body>
-<h1 class="contenitore">Film</h1>
+<h1 class="contenitore">Libri</h1>
 <c:if test = "${empty lista}">
-non ci sono film
+non ci sono libri
 </c:if>
 <table id="table1"><tr><td>
-<c:if test = "${not empty lista}">
+<c:if test = "${not empty lista}" var = "current">
 <c:forEach items = "${lista}" var = "current">
 <div class="container">
 <div class="table">
-<table id="table2"><tr><td width=20%>
-<a href="/Library/details.jsp?ID=${current.id}">
+<table id="table2"><tr><td><tr><td width=20%>
+<a href="/Library/index/libri/detail?ID=${current.id}">
 <img src="D:\INSTALL\eclipse-jee-mars-2-win32-x86_64\immagini\film.jpg" width=100%></a></td><td>
-<a href="/Library/film/details.jsp?ID=${current.id}">
-Titolo: ${current.titolo}<br></a>
+<a href="/Library/index/libri/detail?ID=${current.id}">
+Autore: ${current.nome}<br></a>
+Titolo: ${current.titolo}<br>
 Data: ${current.data}<br>
 </td></tr></table>
 </div>

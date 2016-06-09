@@ -15,7 +15,7 @@ import persistance.model.Musica;
 /**
  * Servlet implementation class Musica
  */
-@WebServlet("/indexMusica/AddMusica")
+@WebServlet("/index/musica/AddMusica")
 public class AddMusica extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

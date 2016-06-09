@@ -15,7 +15,7 @@ import persistance.model.Libri;
 /**
  * Servlet implementation class Libri
  */
-@WebServlet("/indexLibri/AddLibri")
+@WebServlet("/index/libri/AddLibri")
 public class AddLibri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

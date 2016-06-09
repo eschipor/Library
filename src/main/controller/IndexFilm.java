@@ -16,7 +16,7 @@ import persistance.model.Film;
 /**
  * Servlet implementation class Index
  */
-@WebServlet(name = "filmlist", urlPatterns = { "/film" })
+@WebServlet(name = "indexFilm", urlPatterns = { "/index/film" })
 public class IndexFilm extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
@@ -36,15 +36,15 @@ public class IndexFilm extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		if(request.getParameter("film") != null)
 		{
-			response.sendRedirect("/Library/indexFilm/insert_film.jsp");
+			response.sendRedirect("/Library/index/film/insert.jsp");
 		}
-		if(request.getParameter("lista") != null)
+		if(request.getParameter("list") != null)
 		{
 			lista = daoFilm.findAll();
 			
 			request.setAttribute("lista", lista);
 
-			RequestDispatcher rd = request.getRequestDispatcher("indexFilm/film.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/index/film/list.jsp");
 			rd.forward(request,response);
 		}
 	}

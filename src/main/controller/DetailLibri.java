@@ -9,22 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import persistance.dao.DaoFilm;
-import persistance.model.Film;
+import persistance.dao.DaoLibri;
+import persistance.model.Libri;
 
 /**
  * Servlet implementation class Index
  */
-@WebServlet(name = "filmDetail", urlPatterns = { "/film/details.jsp" })
-public class FilmDetail extends HttpServlet {
+@WebServlet(name = "detailLibri", urlPatterns = { "/index/libri/detail" })
+public class DetailLibri extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-	DaoFilm daoFilm = new DaoFilm();
+	DaoLibri daoLibri = new DaoLibri();
 	
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public FilmDetail() {
+    public DetailLibri() {
         super();
     }
 
@@ -32,13 +32,13 @@ public class FilmDetail extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(request.getAttribute("ID") != null)
+		if(request.getParameter("ID") != null)
 		{
-			Film current = daoFilm.getDetailByID((Integer)request.getAttribute("ID"));
+			Libri current = daoLibri.getDetailByID(Integer.parseInt(request.getParameter("ID")));
 			
-			request.setAttribute("film",current);
+			request.setAttribute("libri",current);
 
-			RequestDispatcher rd = request.getRequestDispatcher("details.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/index/libri/details.jsp");
 			rd.forward(request,response);
 		}
 	}
