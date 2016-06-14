@@ -6,14 +6,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 
-import persistance.model.Film;
+import persistance.model.Media;
 
-public class DaoFilm 
+public class DaoMedia 
 {	
-	private DaoMedia daoMedia = new DaoMedia();
-	private final String table = "film";
+	private final String table = "media";
 	private Connection connect = null;
 	private Statement statement = null;
 	private PreparedStatement preparedStatement = null;
@@ -36,65 +34,38 @@ public class DaoFilm
     	}
     	return statement;
     }
-    public ArrayList<Film> findAll()
-    {
-    	connect();	
-    	ArrayList<Film> film = new ArrayList<Film>();
 
-    	try
-    	{
-    		resultSet = connect().executeQuery("select * from " +table);
-    		
-    		while(resultSet.next())
-    		{
-    			Film fil = new Film();
-    			fil.setId(resultSet.getInt("id"));
-    			fil.setTitolo(resultSet.getString("titolo"));
-    			fil.setData(resultSet.getInt("data"));
-    			film.add(fil);
-    		}
-    	}
-    	catch(Exception e)
-    	{
-    		return film;
-    	}
-    	finally
-    	{
-    		close();
-    	}
-    	return film;
-    	
-    }
-    public boolean add(Film f)
+    public boolean add(Media m)
     {
     	connect();
     	try {
-    		daoMedia.add(f.getMedia());
-			preparedStatement=connect.prepareStatement("insert into " +table+ "(titolo, data, ref_media) values (?, ?, ?)");
-	    	preparedStatement.setString(1, f.getTitolo());
-	    	preparedStatement.setInt(2, f.getData());
+    		m.setTipo(m.getNome().substring(m.getNome().indexOf(".")+1, m.getNome().length()));
+    		preparedStatement=connect.prepareStatement("insert into " +table+ "(nome, tipo, indirizzo, size) values (?, ?, ?, ?)");
+	    	preparedStatement.setString(1, m.getNome());
+	    	preparedStatement.setString(2, m.getTipo());
+	    	preparedStatement.setString(3, m.getIndirizzo());
+	    	preparedStatement.setFloat(4, m.getSize());
 	    	preparedStatement.executeUpdate();
-	    	return true;	
-	    	
+	    	return true;
     	} catch (SQLException e) {
+			e.printStackTrace();
 			return false;
-		}
+		} 
     	finally{
     	close();
     	}
     }
-    public boolean delete(Film f)
+    public boolean delete(Media m)
     {
 		try {
-			preparedStatement = connect.prepareStatement("delete from " +table+ " where titolo = ?;");
-			preparedStatement.setString(1, f.getTitolo());
+			preparedStatement = connect.prepareStatement("delete from " +table+ " where nome= ?;");
+		    preparedStatement.setString(1, m.getNome());
 			preparedStatement.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
 		}	      
-	    
     }
     
     private void close() 
@@ -120,25 +91,22 @@ public class DaoFilm
 
     	}
     }
-    //Show details
-	public Film getDetailByID(Integer id) {
+	public Media getByID(Integer id) {
 		try{
 			connect();
-			DaoMedia daoMedia = new DaoMedia();
 			String selectSQL = "select * from " +table+ " where id = ?";
 			PreparedStatement preparedStatement = connect.prepareStatement(selectSQL);
 			preparedStatement.setInt(1, id.intValue());
 			resultSet= preparedStatement.executeQuery();
 			resultSet.next();
-				Film film = new Film();
-    			film.setId(resultSet.getInt("id"));
-    			film.setTitolo(resultSet.getString("titolo"));
-    			film.setData(resultSet.getInt("data"));
-    			if((Integer)resultSet.getInt("ref_media")!=null)
-    			{
-    				film.setMedia(daoMedia.getByID((Integer)resultSet.getInt("ref_media")));
-    			}
-    		return film;
+				Media media = new Media();
+				media.setId(resultSet.getInt("id"));
+				media.setNome(resultSet.getString("nome"));
+				media.setTipo(resultSet.getString("tipo"));
+				media.setIndirizzo(resultSet.getString("indirizzo"));
+				media.setSize(resultSet.getInt("size"));
+    	
+    		return media;
 		}catch(Exception e){
 			return null;
 		}finally{

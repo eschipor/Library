@@ -5,6 +5,7 @@ public class Film
 	private Integer id;
 	private String titolo;
 	private Integer data;
+	private Media media;
 	
 	public Integer getId() {
 		return id;
@@ -23,5 +24,11 @@ public class Film
 	}
 	public void setData(Integer data) {
 		this.data = data;
+	}
+	public Media getMedia() {
+		return media;
+	}
+	public void setMedia(Media media) {
+		this.media = media;
 	}
 }

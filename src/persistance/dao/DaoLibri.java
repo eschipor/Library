@@ -47,6 +47,7 @@ public class DaoLibri
     		while(resultSet.next())
     		{
     			Libri lib = new Libri();
+    			lib.setId(resultSet.getInt("id"));
     			lib.setNome(resultSet.getString("nome"));
     			lib.setTitolo(resultSet.getString("titolo"));
     			lib.setData(resultSet.getInt("data"));

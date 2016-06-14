@@ -23,5 +23,7 @@
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="D:/java/apache-tomcat-7.0.69/lib/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="lib/commons-fileupload-1.3.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
