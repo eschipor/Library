@@ -35,21 +35,25 @@ public class DaoMedia
     	return statement;
     }
 
-    public boolean add(Media m)
+    public Integer add(Media m)
     {
     	connect();
+    	if(!m.getNome().equals("")||m.getNome()!=null){
+    		m.setTipo(m.getNome().substring(m.getNome().lastIndexOf(".")));
+    	}
     	try {
-    		m.setTipo(m.getNome().substring(m.getNome().indexOf(".")+1, m.getNome().length()));
-    		preparedStatement=connect.prepareStatement("insert into " +table+ "(nome, tipo, indirizzo, size) values (?, ?, ?, ?)");
+    		preparedStatement=connect.prepareStatement("insert into " +table+ "(nome, tipo, indirizzo, size) values (?, ?, ?, ?)",Statement.RETURN_GENERATED_KEYS);
 	    	preparedStatement.setString(1, m.getNome());
 	    	preparedStatement.setString(2, m.getTipo());
 	    	preparedStatement.setString(3, m.getIndirizzo());
 	    	preparedStatement.setFloat(4, m.getSize());
 	    	preparedStatement.executeUpdate();
-	    	return true;
+	    	ResultSet rs =  preparedStatement.getGeneratedKeys();
+	    	rs.next(); 
+	    	return rs.getInt(1);
     	} catch (SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		} 
     	finally{
     	close();

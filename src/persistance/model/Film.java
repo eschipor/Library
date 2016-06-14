@@ -7,6 +7,10 @@ public class Film
 	private Integer data;
 	private Media media;
 	
+	public Film(){
+		media = new Media();
+	}
+	
 	public Integer getId() {
 		return id;
 	}

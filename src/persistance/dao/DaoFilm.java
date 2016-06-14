@@ -69,10 +69,18 @@ public class DaoFilm
     {
     	connect();
     	try {
-    		daoMedia.add(f.getMedia());
+    		if(f.getMedia()!=null){
+    		Integer ref_media = daoMedia.add(f.getMedia());
 			preparedStatement=connect.prepareStatement("insert into " +table+ "(titolo, data, ref_media) values (?, ?, ?)");
 	    	preparedStatement.setString(1, f.getTitolo());
 	    	preparedStatement.setInt(2, f.getData());
+	    	preparedStatement.setInt(3, ref_media);
+    		}
+    		else{
+    			preparedStatement=connect.prepareStatement("insert into " +table+ "(titolo, data, ref_media) values (?, ?)");
+    	    	preparedStatement.setString(1, f.getTitolo());
+    	    	preparedStatement.setInt(2, f.getData());
+    		}
 	    	preparedStatement.executeUpdate();
 	    	return true;	
 	    	
